@@ -1,5 +1,6 @@
 package br.com.oel.downlink.controller;
 
+import br.com.oel.downlink.model.FileEntity;
 import br.com.oel.downlink.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,7 +21,7 @@ public class FileController {
     private FileService fileService;
 
 
-    //upload the file then return the download link
+    //carrega o arquivo e gera o link de download
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file")MultipartFile file) throws IOException{
         String fileId = fileService.saveFile(file);
@@ -31,24 +32,17 @@ public class FileController {
     }
 
     /* endpoint
-    download the file by id */
+    download no arquivo pelo id */
     @GetMapping("/download/{id}")
-
     public ResponseEntity<Resource> downloadFile(@PathVariable String id) {
-        return fileService.getFile(id)
-                .map(file -> {
+        FileEntity file = fileService.getFile(id); // now directly returns or throws
 
-                    //cria um recurso a partir do conteudo do arquivo(bytes)
-                    Resource resource = new ByteArrayResource(file.getData());
+        Resource resource = new ByteArrayResource(file.getData());
 
-                    return ResponseEntity.ok()
-                            .contentType(MediaType.parseMediaType(file.getContentType()))
-                            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
-                            .body(resource);
-                })
-
-                //se  nao for encontrado, retorna 404
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+                .body(resource);
     }
 
 }

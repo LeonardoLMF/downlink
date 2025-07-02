@@ -1,5 +1,6 @@
 package br.com.oel.downlink.service;
 
+import br.com.oel.downlink.exception.FileNotFoundException;
 import br.com.oel.downlink.model.FileEntity;
 import br.com.oel.downlink.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,14 @@ public class FileService {
                 .data(file.getBytes())
                 .build();
 
+        fileRepository.save(fileEntity);
+
         return id;
     }
 
-    public Optional<FileEntity> getFile(String id){
-        return fileRepository.findById(id);
+    public FileEntity getFile(String id){
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileNotFoundException("File with ID '" + id + "' not found"));
     }
 
 

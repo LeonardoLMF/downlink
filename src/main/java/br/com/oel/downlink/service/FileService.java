@@ -1,7 +1,7 @@
-package br.com.oel.downlink.Service;
+package br.com.oel.downlink.service;
 
-import br.com.oel.downlink.Model.FileEntity;
-import br.com.oel.downlink.Repository.FileRepository;
+import br.com.oel.downlink.model.FileEntity;
+import br.com.oel.downlink.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

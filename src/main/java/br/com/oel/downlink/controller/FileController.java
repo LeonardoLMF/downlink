@@ -1,6 +1,6 @@
-package br.com.oel.downlink.Controller;
+package br.com.oel.downlink.controller;
 
-import br.com.oel.downlink.Service.FileService;
+import br.com.oel.downlink.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;

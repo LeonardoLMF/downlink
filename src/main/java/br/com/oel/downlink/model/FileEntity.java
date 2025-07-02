@@ -1,4 +1,4 @@
-package br.com.oel.downlink.Model;
+package br.com.oel.downlink.model;
 
 import jakarta.persistence.*;
 import lombok.*;
